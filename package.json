@@ -3,6 +3,15 @@
   "bin": {
     "terros": "./cli.js"
   },
+  "bugs": {
+    "url": "https://github.com/terros-inc/cli/issues"
+  },
+  "dependencies": {
+    "luxon": "^3.7.2",
+    "minimist": "^1.2.8",
+    "open": "^11.0.0",
+    "yaml": "^2.9.0"
+  },
   "description": "Command-line interface for Terros Sales platform",
   "devDependencies": {
     "@types/minimist": "^1.2.5",
@@ -10,30 +19,37 @@
     "typescript": "^6.0.3",
     "@types/luxon": "^3.7.1"
   },
-  "keywords": ["terros", "cli"],
-  "license": "MIT",
-  "main": "./dist/index.js",
-  "name": "@terros-inc/cli",
-  "scripts": {
-    "build": "tsc",
-    "prepack": "pnpm build",
-    "start": "node src/index.ts"
-  },
   "engines": {
     "node": ">=24"
   },
-  "files": ["cli.js", "terros.yml", "dist"],
-  "type": "module",
-  "version": "1.0.3",
-  "dependencies": {
-    "luxon": "^3.7.2",
-    "minimist": "^1.2.8",
-    "open": "^11.0.0",
-    "yaml": "^2.9.0"
-  },
+  "files": [
+    "cli.js",
+    "terros.yml",
+    "dist"
+  ],
+  "homepage": "https://github.com/terros-inc/cli#readme",
+  "keywords": [
+    "terros",
+    "cli"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "name": "@terros-inc/cli",
+  "packageManager": "pnpm@11.7.0+sha512.19cc852c120c7125760f2443ee6be0ca5b40f9f50598de1a09a1f177503e010e57c23c77646e01e761de59bf874fb22a3398c33ab9691fc13eb946b6f0f4d620",
   "publishConfig": {
     "access": "public",
     "tag": "latest"
   },
-  "packageManager": "pnpm@11.7.0+sha512.19cc852c120c7125760f2443ee6be0ca5b40f9f50598de1a09a1f177503e010e57c23c77646e01e761de59bf874fb22a3398c33ab9691fc13eb946b6f0f4d620"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terros-inc/cli.git"
+  },
+  "scripts": {
+    "fetch-openapi": "wget https://docs.terros.com/openapi/terros.yml",
+    "build": "tsc",
+    "prepack": "pnpm fetch-openapi && pnpm build",
+    "start": "node src/index.ts"
+  },
+  "type": "module",
+  "version": "1.0.4"
 }
