@@ -1,7 +1,7 @@
 {
   "author": "",
   "bin": {
-    "cli": "./dist/index.js"
+    "terros": "./dist/index.js"
   },
   "description": "",
   "devDependencies": {
