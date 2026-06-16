@@ -30,7 +30,7 @@ async function readTokens(): Promise<SavedTokens | null> {
   }
 }
 
-async function saveTokens(
+export async function saveTokens(
     tokenResponse: TokenResponse,
 ): Promise<SavedTokens> {
 

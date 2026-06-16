@@ -3,7 +3,6 @@ import type { DeviceCodeResponse, TokenResponse } from "./types.ts";
 import open from "open";
 import { DateTime } from "luxon";
 
-
 export async function signInToAuth0(): Promise<TokenResponse> {
   const res = await fetch(`${AUTH0_DOMAIN}/oauth/device/code`, {
     method: 'POST',

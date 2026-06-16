@@ -6,8 +6,14 @@ import {
   HELP_PARENT_MESSAGE,
 } from './messages.ts'
 import { loadEndpoints } from './crud/index.ts'
+import {
+  getCommandGroup,
+  getCommandNames,
+  getSubcommand,
+  getSubcommandNames,
+} from './commands/index.ts'
 
-function main() {
+async function main() {
   const params = minimist(process.argv.slice(2))
   const commands = params._
   if (commands.length === 0) {
@@ -15,42 +21,81 @@ function main() {
     return
   }
 
-  const endpoints = loadEndpoints()
-
-  if (commands.at(-1) === 'help') {
-    if (commands.length >= 2) {
-      const requestedAlias = commands.at(0)
-      if (requestedAlias) {
-        const endpoint = endpoints[requestedAlias]
-        if (endpoint) {
-          if (commands.length >= 3) {
-            const subcommand = commands.at(1)
-            if (subcommand) {
-              const requestedSubcommand = endpoint[subcommand]
-              if (requestedSubcommand) {
-                console.log(formatSubcommandParametersHelp(
-                  requestedAlias,
-                  subcommand,
-                  requestedSubcommand.parameters,
-                ))
-                return
-              }
-            }
-
-          }
-          const subcommands = Object.keys(endpoint).sort()
-          console.log(formatSubcommandsHelp(requestedAlias, subcommands))
-          return
-        }
-      }
-    }
-    const endpointList = Object.keys(endpoints).sort()
-    console.log(formatCommandsHelp(endpointList))
+  const requestedAlias = commands.at(0)
+  if (!requestedAlias) {
+    console.log(HELP_PARENT_MESSAGE)
     return
   }
 
+  if (commands.at(-1) === 'help') {
+    showHelp(commands, requestedAlias)
+    return
+  }
 
+  const commandGroup = getCommandGroup(requestedAlias)
+  if (commandGroup) {
+    const subcommand = commands.at(1)
+    if (!subcommand) {
+      console.log(formatSubcommandsHelp(requestedAlias, getSubcommandNames(requestedAlias)))
+      return
+    }
+
+    const command = getSubcommand(requestedAlias, subcommand)
+    if (!command) {
+      console.error(`Unknown subcommand: ${requestedAlias} ${subcommand}`)
+      console.log(formatSubcommandsHelp(requestedAlias, getSubcommandNames(requestedAlias)))
+      process.exitCode = 1
+      return
+    }
+
+    await command.run({
+      params,
+      args: commands.slice(2),
+    })
+    return
+  }
+
+  loadEndpoints()
 }
 
+function showHelp(commands: string[], requestedAlias: string) {
+  const commandGroup = getCommandGroup(requestedAlias)
+  if (commandGroup) {
+    const subcommand = commands.at(1)
+    if (subcommand && commands.length >= 3 && getSubcommand(requestedAlias, subcommand)) {
+      console.log(formatSubcommandParametersHelp(requestedAlias, subcommand, []))
+      return
+    }
 
-main()
+    console.log(formatSubcommandsHelp(requestedAlias, getSubcommandNames(requestedAlias)))
+    return
+  }
+
+  const endpoints = loadEndpoints()
+  const endpoint = endpoints[requestedAlias]
+  if (endpoint) {
+    const subcommand = commands.at(1)
+    if (subcommand && commands.length >= 3) {
+      const requestedSubcommand = endpoint[subcommand]
+      if (requestedSubcommand) {
+        console.log(formatSubcommandParametersHelp(
+          requestedAlias,
+          subcommand,
+          requestedSubcommand.parameters,
+        ))
+        return
+      }
+    }
+
+    console.log(formatSubcommandsHelp(requestedAlias, Object.keys(endpoint).sort()))
+    return
+  }
+
+  const commandList = [...getCommandNames(), ...Object.keys(endpoints)].sort()
+  console.log(formatCommandsHelp(commandList))
+}
+
+main().catch((error: unknown) => {
+  console.error(error instanceof Error ? error.message : error)
+  process.exitCode = 1
+})
