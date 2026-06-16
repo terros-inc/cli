@@ -6,6 +6,8 @@ import {
   HELP_PARENT_MESSAGE,
 } from './messages.ts'
 import { loadEndpoints } from './crud/index.ts'
+import { buildEndpointInput } from './crud/input.ts'
+import { queryTerrosAPI } from './api/query.ts'
 import {
   getCommandGroup,
   getCommandNames,
@@ -55,7 +57,33 @@ async function main() {
     return
   }
 
-  loadEndpoints()
+  const endpoints = loadEndpoints()
+  const endpointGroup = endpoints[requestedAlias]
+  if (!endpointGroup) {
+    console.error(`Unknown command: ${requestedAlias}`)
+    const commandList = [...getCommandNames(), ...Object.keys(endpoints)].sort()
+    console.log(formatCommandsHelp(commandList))
+    process.exitCode = 1
+    return
+  }
+
+  const subcommand = commands.at(1)
+  if (!subcommand) {
+    console.log(formatSubcommandsHelp(requestedAlias, Object.keys(endpointGroup).sort()))
+    return
+  }
+
+  const endpoint = endpointGroup[subcommand]
+  if (!endpoint) {
+    console.error(`Unknown subcommand: ${requestedAlias} ${subcommand}`)
+    console.log(formatSubcommandsHelp(requestedAlias, Object.keys(endpointGroup).sort()))
+    process.exitCode = 1
+    return
+  }
+
+  const input = buildEndpointInput(endpoint, params)
+  const response = await queryTerrosAPI(endpoint.path, input)
+  console.log(JSON.stringify(response, null, 2))
 }
 
 function showHelp(commands: string[], requestedAlias: string) {
