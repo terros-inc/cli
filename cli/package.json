@@ -13,7 +13,7 @@
   "main": "./dist/index.js",
   "name": "@terros-inc/cli",
   "scripts": {
-    "start": "node cli/src/index.ts"
+    "start": "node src/index.ts"
   },
   "engines": {
     "node": ">=24"
