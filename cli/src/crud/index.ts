@@ -3,6 +3,7 @@ import { parse } from 'yaml'
 import type { OpenAPISchema } from './types.ts'
 import type { EndpointGroups } from './endpoint.ts'
 import { getPathParts } from './util.ts'
+import { getEndpointParameters } from './parameters.ts'
 
 export function loadEndpoints(): EndpointGroups {
 
@@ -19,9 +20,12 @@ export function loadEndpoints(): EndpointGroups {
 
     endpoints[group] ??= {}
 
+    const schema = config.post.requestBody.content['application/json'].schema
+
     endpoints[group][alias] = {
       path,
-      properties: config.post.requestBody.content['application/json'].schema,
+      properties: schema,
+      parameters: getEndpointParameters(schema, data.components),
     }
   })
 

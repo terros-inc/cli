@@ -1,10 +1,14 @@
 import minimist from 'minimist'
-import { HELP_PARENT_MESSAGE } from './messages.ts'
+import {
+  formatCommandsHelp,
+  formatSubcommandParametersHelp,
+  formatSubcommandsHelp,
+  HELP_PARENT_MESSAGE,
+} from './messages.ts'
 import { loadEndpoints } from './crud/index.ts'
 
 function main() {
   const params = minimist(process.argv.slice(2))
-  console.log(JSON.stringify(params))
   const commands = params._
   if (commands.length === 0) {
     console.log(HELP_PARENT_MESSAGE)
@@ -24,18 +28,24 @@ function main() {
             if (subcommand) {
               const requestedSubcommand = endpoint[subcommand]
               if (requestedSubcommand) {
-                // print subcommand parameters
+                console.log(formatSubcommandParametersHelp(
+                  requestedAlias,
+                  subcommand,
+                  requestedSubcommand.parameters,
+                ))
                 return
               }
             }
 
           }
-          // print subcommands
+          const subcommands = Object.keys(endpoint).sort()
+          console.log(formatSubcommandsHelp(requestedAlias, subcommands))
           return
         }
       }
     }
-    // print all endpoints
+    const endpointList = Object.keys(endpoints).sort()
+    console.log(formatCommandsHelp(endpointList))
     return
   }
 

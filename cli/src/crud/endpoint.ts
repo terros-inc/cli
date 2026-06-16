@@ -1,8 +1,16 @@
 import type { Schema } from './types.ts'
 
+export type EndpointParameter = {
+  name: string
+  type: string
+  required: boolean
+  description?: string
+}
+
 export type Endpoint = {
   path: string
   properties: Schema
+  parameters: EndpointParameter[]
 }
 
 export type Endpoints = {
