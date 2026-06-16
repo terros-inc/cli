@@ -1,13 +1,18 @@
 import { readFileSync } from 'node:fs'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { parse } from 'yaml'
 import type { OpenAPISchema } from './types.ts'
 import type { EndpointGroups } from './endpoint.ts'
 import { getPathParts } from './util.ts'
 import { getEndpointParameters } from './parameters.ts'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
 export function loadEndpoints(): EndpointGroups {
 
-  const file = readFileSync('./terros.yml', 'utf-8')
+  const file = readFileSync(resolve(__dirname, '../../terros.yml'), 'utf-8')
 
   const data = parse(file) as OpenAPISchema
 
