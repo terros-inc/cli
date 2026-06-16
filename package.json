@@ -1,7 +1,7 @@
 {
   "author": "",
   "bin": {
-    "terros": "./dist/index.js"
+    "terros": "./cli.js"
   },
   "description": "",
   "devDependencies": {
@@ -14,13 +14,15 @@
   "main": "./dist/index.js",
   "name": "@terros-inc/cli",
   "scripts": {
+    "build": "tsc",
+    "prepack": "pnpm build",
     "start": "node src/index.ts"
   },
   "engines": {
     "node": ">=24"
   },
+  "files": ["cli.js", "dist"],
   "type": "module",
-  "types": "./dist/index.d.ts",
   "version": "1.0.0",
   "dependencies": {
     "luxon": "^3.7.2",
