@@ -1,5 +1,5 @@
 import { signInToAuth0 } from '../auth/auth0.ts'
-import { saveTokens } from '../auth/tokens.ts'
+import { getTokens, saveTokens } from '../auth/tokens.ts'
 
 export const authCommands = {
   login: {
@@ -10,4 +10,15 @@ export const authCommands = {
       console.log('Signed in successfully')
     },
   },
+  token: {
+    description: 'Get Terros API Token',
+    async run() {
+      const tokens = await getTokens()
+      if (tokens === null) {
+        console.error('CLI not authorized. Run \`terros auth login\` to authenticate.')
+        return
+      }
+      console.log(tokens.access_token)
+    }
+  }
 }

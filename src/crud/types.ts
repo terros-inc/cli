@@ -61,7 +61,7 @@ export type Schema =
 
 export type OpenAPISchema = {
   /**
-   * OpenAPI Schema version
+   * OpenAPI Schema version`
    */
   openapi: string
   info: {
