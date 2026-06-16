@@ -1,16 +1,17 @@
 {
-  "author": "",
+  "author": "Terros Inc.",
   "bin": {
     "terros": "./cli.js"
   },
-  "description": "",
+  "description": "Command-line interface for Terros Sales platform",
   "devDependencies": {
     "@types/minimist": "^1.2.5",
     "@types/node": "^24.13.1",
     "typescript": "^6.0.3",
     "@types/luxon": "^3.7.1"
   },
-  "keywords": [],
+  "keywords": ["terros", "cli"],
+  "license": "MIT",
   "main": "./dist/index.js",
   "name": "@terros-inc/cli",
   "scripts": {
