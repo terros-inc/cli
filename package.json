@@ -1,10 +1,32 @@
 {
   "author": "",
+  "bin": {
+    "cli": "./dist/index.js"
+  },
   "description": "",
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^24.13.1",
+    "typescript": "^6.0.3",
+    "@types/luxon": "^3.7.1"
+  },
   "keywords": [],
-  "name": "@terros-inc/cli-root",
-  "packageManager": "pnpm@11.7.0+sha512.19cc852c120c7125760f2443ee6be0ca5b40f9f50598de1a09a1f177503e010e57c23c77646e01e761de59bf874fb22a3398c33ab9691fc13eb946b6f0f4d620",
-  "version": "0.0.0",
-  "dependencies": {}
+  "main": "./dist/index.js",
+  "name": "@terros-inc/cli",
+  "scripts": {
+    "start": "node src/index.ts"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "version": "1.0.0",
+  "dependencies": {
+    "luxon": "^3.7.2",
+    "minimist": "^1.2.8",
+    "open": "^11.0.0",
+    "yaml": "^2.9.0"
+  },
+  "packageManager": "pnpm@11.7.0+sha512.19cc852c120c7125760f2443ee6be0ca5b40f9f50598de1a09a1f177503e010e57c23c77646e01e761de59bf874fb22a3398c33ab9691fc13eb946b6f0f4d620"
 }
