@@ -45,10 +45,11 @@
     "url": "git+https://github.com/terros-inc/cli.git"
   },
   "scripts": {
+    "fetch-openapi": "wget https://docs.terros.com/openapi/terros.yml",
     "build": "tsc",
-    "prepack": "pnpm build",
+    "prepack": "pnpm fetch-openapi && pnpm build",
     "start": "node src/index.ts"
   },
   "type": "module",
-  "version": "1.0.3"
+  "version": "1.0.4"
 }
