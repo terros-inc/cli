@@ -14,10 +14,12 @@
   },
   "description": "Command-line interface for Terros Sales platform",
   "devDependencies": {
+    "@types/luxon": "^3.7.1",
     "@types/minimist": "^1.2.5",
     "@types/node": "^24.13.1",
-    "typescript": "^6.0.3",
-    "@types/luxon": "^3.7.1"
+    "oxfmt": "catalog:",
+    "oxlint": "catalog:",
+    "typescript": "^6.0.3"
   },
   "engines": {
     "node": ">=24"
@@ -51,5 +53,5 @@
     "start": "node src/index.ts"
   },
   "type": "module",
-  "version": "1.0.5"
+  "version": "1.0.6"
 }
