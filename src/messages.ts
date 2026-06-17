@@ -1,4 +1,3 @@
-
 import type { EndpointParameter } from './crud/endpoint.ts'
 
 export const HELP_PARENT_MESSAGE = `
@@ -39,13 +38,9 @@ export function formatSubcommandsHelp(command: string, subcommands: string[]): s
 export function formatSubcommandParametersHelp(
   command: string,
   subcommand: string,
-  parameters: EndpointParameter[],
+  parameters: EndpointParameter[]
 ): string {
-  const lines = [
-    `usage: terros ${command} ${subcommand} [parameters]`,
-    '',
-    'Parameters:',
-  ]
+  const lines = [`usage: terros ${command} ${subcommand} [parameters]`, '', 'Parameters:']
 
   if (parameters.length === 0) {
     lines.push('  none')
@@ -55,13 +50,15 @@ export function formatSubcommandParametersHelp(
   const nameWidth = Math.max(...parameters.map((parameter) => parameter.name.length))
   const typeWidth = Math.max(...parameters.map((parameter) => parameter.type.length))
 
-  lines.push(...parameters.map((parameter) => {
-    const name = parameter.name.padEnd(nameWidth)
-    const type = parameter.type.padEnd(typeWidth)
-    const required = parameter.required ? 'required' : 'optional'
-    const description = parameter.description ? `  ${parameter.description}` : ''
-    return `  --${name}  ${type}  ${required}${description}`
-  }))
+  lines.push(
+    ...parameters.map((parameter) => {
+      const name = parameter.name.padEnd(nameWidth)
+      const type = parameter.type.padEnd(typeWidth)
+      const required = parameter.required ? 'required' : 'optional'
+      const description = parameter.description ? `  ${parameter.description}` : ''
+      return `  --${name}  ${type}  ${required}${description}`
+    })
+  )
 
   return lines.join('\n')
 }

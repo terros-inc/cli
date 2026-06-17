@@ -1,17 +1,16 @@
-import { readFileSync } from 'node:fs'
-import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { dirname, resolve } from 'node:path'
+import { readFileSync } from 'node:fs'
 import { parse } from 'yaml'
-import type { OpenAPISchema } from './types.ts'
-import type { EndpointGroups } from './endpoint.ts'
 import { getPathParts } from './util.ts'
+import type { OpenAPISchema } from './types.ts'
 import { getEndpointParameters } from './parameters.ts'
+import type { EndpointGroups } from './endpoint.ts'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 export function loadEndpoints(): EndpointGroups {
-
   const file = readFileSync(resolve(__dirname, '../../terros.yml'), 'utf-8')
 
   const data = parse(file) as OpenAPISchema
@@ -21,7 +20,7 @@ export function loadEndpoints(): EndpointGroups {
   const endpoints: EndpointGroups = {}
 
   entries.forEach(([path, config]) => {
-    const {group, alias} = getPathParts(path)
+    const { group, alias } = getPathParts(path)
 
     endpoints[group] ??= {}
 

@@ -13,5 +13,7 @@ export async function getAuthorizationHeader(): Promise<string> {
     return `Bearer ${tokens.access_token}`
   }
 
-  throw new Error(`CLI not authorized. Run \`terros auth login\` to authenticate or provide an API key in the \`${API_KEY_ENV}\` environment variable.`)
+  throw new Error(
+    `CLI not authorized. Run \`terros auth login\` to authenticate or provide an API key in the \`${API_KEY_ENV}\` environment variable.`
+  )
 }

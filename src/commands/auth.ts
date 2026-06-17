@@ -1,5 +1,5 @@
-import { signInToAuth0 } from '../auth/auth0.ts'
 import { getTokens, saveTokens } from '../auth/tokens.ts'
+import { signInToAuth0 } from '../auth/auth0.ts'
 
 export const authCommands = {
   login: {
@@ -19,6 +19,6 @@ export const authCommands = {
         return
       }
       console.log(tokens.access_token)
-    }
-  }
+    },
+  },
 }

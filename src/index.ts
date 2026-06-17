@@ -5,17 +5,12 @@ import {
   formatSubcommandsHelp,
   HELP_PARENT_MESSAGE,
 } from './messages.ts'
-import { loadEndpoints } from './crud/index.ts'
 import { buildEndpointInput } from './crud/input.ts'
+import { loadEndpoints } from './crud/index.ts'
+import { getCommandGroup, getCommandNames, getSubcommand, getSubcommandNames } from './commands/index.ts'
 import { queryTerrosAPI } from './api/query.ts'
-import {
-  getCommandGroup,
-  getCommandNames,
-  getSubcommand,
-  getSubcommandNames,
-} from './commands/index.ts'
 
-async function main() {
+async function main(): Promise<void> {
   const params = minimist(process.argv.slice(2))
   const commands = params._
   if (commands.length === 0) {
@@ -86,7 +81,7 @@ async function main() {
   console.log(JSON.stringify(response, null, 2))
 }
 
-function showHelp(commands: string[], requestedAlias: string) {
+function showHelp(commands: string[], requestedAlias: string): void {
   const commandGroup = getCommandGroup(requestedAlias)
   if (commandGroup) {
     const subcommand = commands.at(1)
@@ -106,11 +101,7 @@ function showHelp(commands: string[], requestedAlias: string) {
     if (subcommand && commands.length >= 3) {
       const requestedSubcommand = endpoint[subcommand]
       if (requestedSubcommand) {
-        console.log(formatSubcommandParametersHelp(
-          requestedAlias,
-          subcommand,
-          requestedSubcommand.parameters,
-        ))
+        console.log(formatSubcommandParametersHelp(requestedAlias, subcommand, requestedSubcommand.parameters))
         return
       }
     }

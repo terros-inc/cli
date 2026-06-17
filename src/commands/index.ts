@@ -1,5 +1,5 @@
-import { authCommands } from './auth.ts'
 import type { CommandGroup, CommandRegistry, Subcommand } from './types.ts'
+import { authCommands } from './auth.ts'
 
 export const commandRegistry: CommandRegistry = {
   auth: {

@@ -9,8 +9,8 @@ export async function queryTerrosAPI(path: string, input: object): Promise<objec
       Authorization: authorization,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(input)
+    body: JSON.stringify(input),
   })
 
-  return await res.json() as object
+  return (await res.json()) as object
 }

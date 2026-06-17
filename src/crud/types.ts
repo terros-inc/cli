@@ -50,14 +50,14 @@ export type ArraySchema = SchemaBase & {
 }
 
 export type Schema =
-    RefSchema
-    | StringSchema
-    | IntegerSchema
-    | NumberSchema
-    | BooleanSchema
-    | ObjectSchema
-    | UnionSchema
-    | ArraySchema
+  | RefSchema
+  | StringSchema
+  | IntegerSchema
+  | NumberSchema
+  | BooleanSchema
+  | ObjectSchema
+  | UnionSchema
+  | ArraySchema
 
 export type OpenAPISchema = {
   /**
@@ -78,7 +78,7 @@ export type OpenAPISchema = {
     {
       description: string
       url: string
-    }
+    },
   ]
   paths: {
     [path: string]: {
