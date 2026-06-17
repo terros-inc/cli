@@ -1,4 +1,5 @@
-import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { dirname, join } from 'node:path'
 import { platform, release } from 'node:os'
 import { readFileSync } from 'node:fs'
 
@@ -9,8 +10,13 @@ type TerrosHeaderMetadata = {
   'Terros-App-Version'?: string
 }
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
 export function getAnalyticsHeaders(): TerrosHeaderMetadata {
-  const packageJson = JSON.parse(readFileSync(join(import.meta.url, 'package.json'), 'utf8')) as { version?: string }
+  const packageJson = JSON.parse(readFileSync(join(__dirname, '../../package.json'), 'utf8')) as {
+    version?: string
+  }
 
   return {
     'Terros-Platform': platform(),
