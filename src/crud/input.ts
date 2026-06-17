@@ -63,7 +63,12 @@ function getHiddenWrapperPrefix(endpoint: Endpoint): string[] {
   if (propertyNames.length !== 1) return []
 
   const wrapperName = propertyNames[0]
-  return wrapperName ? [wrapperName] : []
+  if (!wrapperName) return []
+
+  const wrapperSchema = schema.properties[wrapperName]
+  if (!wrapperSchema || !('type' in wrapperSchema) || wrapperSchema.type !== 'object') return []
+
+  return [wrapperName]
 }
 
 function setNestedValue(input: Record<string, unknown>, path: string[], value: unknown): void {
