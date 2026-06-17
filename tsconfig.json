@@ -27,7 +27,7 @@
     "allowImportingTsExtensions": true,
     "rewriteRelativeImportExtensions": true
   },
-  "include": ["*.ts",
+  "include": [
     "src/**/*.ts"
   ],
   "exclude": [
