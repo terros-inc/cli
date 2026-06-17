@@ -1,5 +1,5 @@
-import type { EndpointParameter } from './endpoint.ts'
 import type { Schema } from './types.ts'
+import type { EndpointParameter } from './endpoint.ts'
 
 type Components = {
   schemas: {
@@ -53,11 +53,7 @@ function resolveSchema(schema: Schema, components: Components, seen = new Set<st
 function flattenSchema(schema: Schema, context: FlattenContext): EndpointParameter[] {
   const resolved = resolveSchema(schema, context.components)
 
-  if (
-    'type' in resolved
-    && resolved.type === 'object'
-    && resolved.properties
-  ) {
+  if ('type' in resolved && resolved.type === 'object' && resolved.properties) {
     return Object.entries(resolved.properties).flatMap(([name, childSchema]) => {
       const required = resolved.required?.includes(name) ?? false
       return flattenSchema(childSchema, {
@@ -73,7 +69,7 @@ function flattenSchema(schema: Schema, context: FlattenContext): EndpointParamet
       name: context.path.join('.'),
       type: getSchemaType(resolved, context.components),
       required: context.required,
-      ...(schema.description ?? resolved.description
+      ...((schema.description ?? resolved.description)
         ? { description: schema.description ?? resolved.description }
         : {}),
     },
@@ -89,16 +85,16 @@ function hideSingleObjectWrapper(parameters: EndpointParameter[]): EndpointParam
 
   return parameters.map((parameter) => ({
     ...parameter,
-    name: parameter.name.startsWith(`${wrapperName}.`)
-      ? parameter.name.slice(wrapperName.length + 1)
-      : parameter.name,
+    name: parameter.name.startsWith(`${wrapperName}.`) ? parameter.name.slice(wrapperName.length + 1) : parameter.name,
   }))
 }
 
 export function getEndpointParameters(schema: Schema, components: Components): EndpointParameter[] {
-  return hideSingleObjectWrapper(flattenSchema(schema, {
-    components,
-    path: [],
-    required: true,
-  }))
+  return hideSingleObjectWrapper(
+    flattenSchema(schema, {
+      components,
+      path: [],
+      required: true,
+    })
+  )
 }

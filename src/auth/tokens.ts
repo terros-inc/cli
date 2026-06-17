@@ -1,9 +1,9 @@
-import type { SavedTokens, TokenResponse } from './types.ts'
-import { DateTime } from 'luxon'
-import { homedir } from 'node:os'
 import { join } from 'node:path'
-import { existsSync } from 'node:fs'
+import { homedir } from 'node:os'
 import { mkdir, writeFile, readFile } from 'node:fs/promises'
+import { existsSync } from 'node:fs'
+import { DateTime } from 'luxon'
+import type { SavedTokens, TokenResponse } from './types.ts'
 import { refreshTokens } from './auth0.ts'
 
 export async function getTokens(): Promise<SavedTokens | null> {
@@ -17,7 +17,7 @@ export async function getTokens(): Promise<SavedTokens | null> {
 }
 
 function areTokensValid(tokens: SavedTokens): boolean {
-  return tokens.expires_at > DateTime.now().minus({ minute: 5 }).toMillis();
+  return tokens.expires_at > DateTime.now().minus({ minute: 5 }).toMillis()
 }
 
 async function readTokens(): Promise<SavedTokens | null> {
@@ -30,10 +30,7 @@ async function readTokens(): Promise<SavedTokens | null> {
   }
 }
 
-export async function saveTokens(
-    tokenResponse: TokenResponse,
-): Promise<SavedTokens> {
-
+export async function saveTokens(tokenResponse: TokenResponse): Promise<SavedTokens> {
   const expiresAt = DateTime.now().plus({ second: tokenResponse.expires_in }).toMillis()
 
   const savedTokens: SavedTokens = {

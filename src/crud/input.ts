@@ -10,11 +10,13 @@ export function buildEndpointInput(endpoint: Endpoint, params: ParsedArgs): obje
     throw new Error(`Unknown parameter(s): ${unknownParameterNames.map((name) => `--${name}`).join(', ')}`)
   }
 
-  const missingParameters = endpoint.parameters.filter((parameter) => (
-    parameter.required && !Object.hasOwn(parsedParams, parameter.name)
-  ))
+  const missingParameters = endpoint.parameters.filter(
+    (parameter) => parameter.required && !Object.hasOwn(parsedParams, parameter.name)
+  )
   if (missingParameters.length > 0) {
-    throw new Error(`Missing required parameter(s): ${missingParameters.map((parameter) => `--${parameter.name}`).join(', ')}`)
+    throw new Error(
+      `Missing required parameter(s): ${missingParameters.map((parameter) => `--${parameter.name}`).join(', ')}`
+    )
   }
 
   const input: Record<string, unknown> = {}
@@ -207,7 +209,9 @@ function parseUnionValue(value: unknown, type: string, parameterName: string): u
     }
   }
 
-  throw new Error(`Parameter --${parameterName} does not match any supported type: ${types.join(', ')}. ${errors.at(-1)}`)
+  throw new Error(
+    `Parameter --${parameterName} does not match any supported type: ${types.join(', ')}. ${errors.at(-1)}`
+  )
 }
 
 function parseJsonValue(value: unknown, parameterName: string): unknown {
