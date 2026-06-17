@@ -55,8 +55,7 @@
         "cases": {
           "camelCase": true,
           "pascalCase": true
-        },
-        "ignore": "^sst-env.d.ts"
+        }
       }
     ]
   },
