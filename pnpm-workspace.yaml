@@ -2,6 +2,7 @@ blockExoticSubdeps: true
 catalog:
   oxfmt: ^0.54.0
   oxlint: ^1.69.0
+  vitest: ^4.1.8
 catalogMode: strict
 cleanupUnusedCatalogs: true
 minimumReleaseAge: 10080

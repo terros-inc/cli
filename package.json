@@ -19,7 +19,8 @@
     "@types/node": "^24.13.1",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "catalog:"
   },
   "engines": {
     "node": ">=24"
@@ -50,6 +51,7 @@
     "fetch-openapi": "wget https://docs.terros.com/openapi/terros.yml",
     "build": "tsc",
     "lint": "oxlint",
+    "test": "vitest run",
     "prepack": "pnpm fetch-openapi && pnpm build",
     "start": "node src/index.ts"
   },
