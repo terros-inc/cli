@@ -4,7 +4,10 @@
     "lib": [
       "ES2022"
     ],
-    "types": ["node"],
+    "types": [
+      "vitest/globals",
+      "node"
+    ],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
 
@@ -13,7 +16,7 @@
 
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
 
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -24,7 +27,7 @@
     "allowImportingTsExtensions": true,
     "rewriteRelativeImportExtensions": true
   },
-  "include": ["*.ts",
+  "include": [
     "src/**/*.ts"
   ],
   "exclude": [

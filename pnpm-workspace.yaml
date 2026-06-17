@@ -1,8 +1,4 @@
 blockExoticSubdeps: true
-catalog:
-  oxfmt: ^0.54.0
-  oxlint: ^1.69.0
-catalogMode: strict
 cleanupUnusedCatalogs: true
 minimumReleaseAge: 10080
 packageManagerStrictVersion: true
