@@ -18,7 +18,7 @@ export const authCommands = {
         console.error('CLI not authorized. Run \`terros auth login\` to authenticate.')
         return
       }
-      console.log(tokens.access_token)
+      process.stdout.write(tokens.access_token)
     },
   },
 }
