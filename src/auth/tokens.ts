@@ -1,10 +1,13 @@
 import { join } from 'node:path'
 import { homedir } from 'node:os'
-import { mkdir, writeFile, readFile } from 'node:fs/promises'
+import { mkdir, writeFile, readFile, chmod } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { DateTime } from 'luxon'
 import type { SavedTokens, TokenResponse } from './types.ts'
 import { refreshTokens } from './auth0.ts'
+
+const AUTH_DIR_MODE = 0o700
+const AUTH_FILE_MODE = 0o600
 
 export async function getTokens(): Promise<SavedTokens | null> {
   const tokens = await readTokens()
@@ -42,7 +45,8 @@ export async function saveTokens(tokenResponse: TokenResponse): Promise<SavedTok
   }
 
   const authFile = await getAuthFilePath()
-  await writeFile(authFile, JSON.stringify(savedTokens))
+  await writeFile(authFile, JSON.stringify(savedTokens), { mode: AUTH_FILE_MODE })
+  await chmod(authFile, AUTH_FILE_MODE)
   return savedTokens
 }
 
@@ -50,7 +54,8 @@ async function getAuthFilePath(): Promise<string> {
   const home = homedir()
   const configPath = join(home, '.config', 'terros')
   if (!existsSync(configPath)) {
-    await mkdir(configPath, { recursive: true })
+    await mkdir(configPath, { recursive: true, mode: AUTH_DIR_MODE })
   }
+  await chmod(configPath, AUTH_DIR_MODE)
   return join(configPath, 'auth.json')
 }
