@@ -25,3 +25,5 @@ export function getSubcommandNames(command: string): string[] {
   if (!commandGroup) return []
   return Object.keys(commandGroup.subcommands).sort()
 }
+
+// test comment
