@@ -28,4 +28,4 @@ jobs:
         run: pnpm install
 
       - name: Publish
-        run: pnpm publish --provenance
+        run: pnpm stage publish --provenance
